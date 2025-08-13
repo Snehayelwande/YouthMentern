@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Youth Mentorship & Internship Portal</title>
+  <!-- Brand: teal/blue academic theme; not similar to Internship360 -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0e1726; /* deep blue */
+      --bg-2:#111c2f;
+      --primary:#21b3a6; /* teal */
+      --primary-2:#16a394;
+      --accent:#3f8cff; /* blue */
+      --muted:#9bb0c3;
+      --card:#152238;
+      --white:#ffffff;
+      --warning:#ffbf69;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto; color:var(--white); background:linear-gradient(180deg,var(--bg),var(--bg-2) 40%);}    
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(1100px,92%);margin:0 auto}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(8px);background:rgba(14,23,38,.75);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:700;letter-spacing:.5px}
+    .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;font-weight:800}
+    nav ul{display:flex;gap:1rem;list-style:none;padding:0;margin:0}
+    nav a{padding:.6rem .9rem;border-radius:999px;color:var(--muted)}
+    nav a:hover, nav a.active{background:rgba(255,255,255,.08);color:var(--white)}
+    .cta{display:flex;gap:.6rem}
+    .btn{border:none;cursor:pointer;border-radius:999px;padding:.65rem 1rem;font-weight:600}
+    .btn-primary{background:var(--primary);color:var(--bg)}
+    .btn-primary:hover{background:var(--primary-2)}
+    .btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.2)}
+    .btn-outline:hover{border-color:var(--white)}
+
+    /* Hero */
+    .hero{position:relative;overflow:hidden}
+    .hero .inner{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:center;padding:5rem 0}
+    .tag{display:inline-flex;gap:.4rem;align-items:center;padding:.3rem .7rem;border-radius:999px;background:rgba(63,140,255,.15);color:#cfe0ff;font-weight:600;font-size:.85rem}
+    h1{font-size:clamp(2rem, 4.5vw, 3rem);line-height:1.15;margin:.8rem 0}
+    p.lead{color:#c6d3e2;max-width:60ch}
+    .hero-ill{background:radial-gradient(1200px 600px at 70% -10%, rgba(63,140,255,.35), transparent 60%),
+               radial-gradient(1000px 600px at 10% 120%, rgba(33,179,166,.35), transparent 60%);}    
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.2rem}
+    .stat{background:var(--card);padding:1rem;border:1px solid rgba(255,255,255,.06);border-radius:16px;text-align:center}
+    .stat h3{margin:.2rem 0;font-size:1.4rem}
+    .stat p{margin:0;color:var(--muted)}
+
+    /* Sections */
+    section{padding:3.5rem 0}
+    h2{font-size:clamp(1.4rem,3vw,2rem);margin:0 0 1rem}
+    .sub{color:var(--muted);margin-bottom:1.6rem}
+
+    /* Cards grid */
+    .grid{display:grid;gap:1rem}
+    .grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:1rem}
+    .card h3{margin:.2rem 0 .2rem}
+    .chip{display:inline-block;padding:.2rem .5rem;border-radius:999px;border:1px dashed rgba(255,255,255,.25);font-size:.75rem;color:#d2dee9}
+
+    /* How it works timeline */
+    .timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+    .step{position:relative;padding:1rem;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.06)}
+    .step .num{width:36px;height:36px;border-radius:10px;background:var(--accent);display:grid;place-items:center;font-weight:800;margin-bottom:.6rem}
+
+    /* Listings */
+    .filters{display:flex;flex-wrap:wrap;gap:.6rem;margin:.6rem 0 1rem}
+    .filters select,.filters input{background:#0c1525;color:var(--white);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:.55rem .7rem}
+    .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+    .list .item{padding:1rem;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.06)}
+    .item .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem}
+
+    /* Footer */
+    footer{border-top:1px solid rgba(255,255,255,.06);padding:2.2rem 0;color:#b8c7d6}
+
+    /* Dialogs */
+    dialog{border:none;border-radius:24px;background:#0d1728;color:var(--white);padding:0;width:min(560px,92%)}
+    dialog::backdrop{background:rgba(0,0,0,.6)}
+    .modal-header{padding:1rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center}
+    .modal-body{padding:1rem 1.2rem}
+    .modal-body form{display:grid;gap:.8rem}
+    .modal-body input,.modal-body select, .modal-body textarea{width:100%;padding:.7rem .8rem;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:#0b1322;color:var(--white)}
+
+    /* Responsive */
+    @media (max-width: 880px){
+      .hero .inner{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      nav ul{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><div class="logo">YM</div> Youth Mentorship & Internships</div>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a class="active" href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#internships">Internships</a></li>
+          <li><a href="#mentorship">Mentorship</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="cta">
+        <button class="btn btn-outline" onclick="openModal('loginModal')">Login</button>
+        <button class="btn btn-primary" onclick="openModal('signupModal')">Sign Up</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero hero-ill">
+    <div class="container inner">
+      <div>
+        <span class="tag">New • Open-source friendly</span>
+        <h1>Connecting Potential, <span style="color:var(--accent)">Creating Futures</span></h1>
+        <p class="lead">A web platform that connects under‑privileged students to mentors, internships, workshops, and career resources so they can grow personally and professionally.</p>
+        <div style="display:flex;gap:.6rem;margin-top:1rem">
+          <a class="btn btn-primary" href="#internships">Find Internships</a>
+          <a class="btn btn-outline" href="#mentorship">Become a Mentor</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><h3 id="statStudents">0</h3><p>Students onboarded</p></div>
+          <div class="stat"><h3 id="statMentors">0</h3><p>Volunteer mentors</p></div>
+          <div class="stat"><h3 id="statNGO">0</h3><p>NGOs & partners</p></div>
+        </div>
+      </div>
+      <div>
+        <img alt="students collaborating" src="https://images.unsplash.com/photo-1596495578065-8a35f9d9f293?q=80&w=1200&auto=format&fit=crop" style="border-radius:22px;border:1px solid rgba(255,255,255,.12)"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / MISSION -->
+  <section id="about">
+    <div class="container">
+      <h2>Our Mission</h2>
+      <p class="sub">We serve students from low‑income backgrounds by bridging them to learning and earning opportunities. We work with college seniors, industry experts, NGOs and companies.</p>
+      <div class="grid cols-3">
+        <div class="card"><span class="chip">Objective</span><h3>Access & Equity</h3><p>Remove barriers to high‑quality mentorship and internships via a centralized, mobile‑friendly portal.</p></div>
+        <div class="card"><span class="chip">Objective</span><h3>Skills to Success</h3><p>Help students build job‑ready portfolios through guided projects, workshops, and real‑world tasks.</p></div>
+        <div class="card"><span class="chip">Objective</span><h3>Community</h3><p>Grow a supportive network of mentors and partners that sustains long‑term career growth.</p></div>
+      </div>
+
+      <h2 style="margin-top:2.2rem">How It Works</h2>
+      <div class="timeline">
+        <div class="step"><div class="num">1</div><strong>Register</strong><p>Create a student/mentor/NGO account.</p></div>
+        <div class="step"><div class="num">2</div><strong>Complete Profile</strong><p>Add skills, interests, location and availability.</p></div>
+        <div class="step"><div class="num">3</div><strong>Get Verified</strong><p>Admins verify with documents / references.</p></div>
+        <div class="step"><div class="num">4</div><strong>Match</strong><p>Our simple matcher suggests mentors & roles.</p></div>
+        <div class="step"><div class="num">5</div><strong>Engage</strong><p>Meet, apply, learn. Track progress in dashboard.</p></div>
+        <div class="step"><div class="num">6</div><strong>Grow</strong><p>Earn certificates and build your portfolio.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERNSHIPS -->
+  <section id="internships">
+    <div class="container">
+      <h2>Explore Internships</h2>
+      <p class="sub">Filter by domain, duration, and type. Click apply to log in and submit.</p>
+      <div class="filters">
+        <select id="filterDomain" aria-label="Filter by domain">
+          <option value="">All Domains</option>
+          <option>Tech</option>
+          <option>Design</option>
+          <option>Marketing</option>
+          <option>Operations</option>
+        </select>
+        <select id="filterDuration" aria-label="Filter by duration">
+          <option value="">Any Duration</option>
+          <option>Short</option>
+          <option>Mid</option>
+          <option>Long</option>
+        </select>
+        <input id="searchTitle" placeholder="Search title…" />
+      </div>
+      <div id="internshipList" class="list" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- MENTORSHIP -->
+  <section id="mentorship">
+    <div class="container">
+      <h2>Find a Mentor</h2>
+      <p class="sub">College seniors and industry experts volunteer in Tech, Design, and Career Guidance.</p>
+      <div id="mentorList" class="list"></div>
+      <div style="margin-top:1rem"><button class="btn btn-primary" onclick="openModal('mentorRequestModal')">Request a Mentor</button></div>
+    </div>
+  </section>
+
+  <!-- ADMIN (mock) -->
+  <section id="admin">
+    <div class="container">
+      <h2>Admin Dashboard (Mock)</h2>
+      <p class="sub">Placeholder for verification & moderation. Replace with real backend later.</p>
+      <div class="grid cols-3">
+        <div class="card"><h3>Pending Profiles</h3><p id="pendingCount">0</p><button class="btn btn-outline" onclick="mockApprove()">Approve One</button></div>
+        <div class="card"><h3>Reported Listings</h3><p>0</p><button class="btn btn-outline" disabled>Review</button></div>
+        <div class="card"><h3>Broadcast</h3><p>Send email update to all users.</p><button class="btn btn-primary" onclick="mockNotify()">Send</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT/FOOTER -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact & Partnerships</h2>
+      <div class="grid cols-3">
+        <div class="card"><h3>Students</h3><p>Questions about applications or matching? We’re here to help.</p><button class="btn btn-outline" onclick="openModal('signupModal')">Get Started</button></div>
+        <div class="card"><h3>Mentors</h3><p>Guide learners in your spare time. Remote options available.</p><button class="btn btn-outline" onclick="openModal('mentorRequestModal')">Offer Guidance</button></div>
+        <div class="card"><h3>NGOs & Companies</h3><p>List internships, workshops, hackathons and talks.</p><button class="btn btn-primary" onclick="openModal('partnerModal')">List Opportunity</button></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <div>© <span id="year"></span> YouthMentern-Mentorship & Internship portal</div>
+      <div style="color:var(--muted)">Privacy • Terms • community@youthmentern.org</div>
+    </div>
+  </footer>
+
+  <!-- MODALS -->
+  <dialog id="loginModal" aria-labelledby="loginTitle">
+    <div class="modal-header"><h3 id="loginTitle">Login</h3><button class="btn btn-outline" onclick="closeModal('loginModal')">✕</button></div>
+    <div class="modal-body">
+      <form id="loginForm">
+        <select id="loginRole" required>
+          <option value="">I am a…</option>
+          <option value="student">Student</option>
+          <option value="mentor">Mentor</option>
+          <option value="ngo">NGO/Company</option>
+        </select>
+        <input id="loginEmail" type="email" placeholder="Email" required />
+        <input id="loginPassword" type="password" placeholder="Password" required />
+        <button class="btn btn-primary" type="submit">Login</button>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="signupModal" aria-labelledby="signupTitle">
+    <div class="modal-header"><h3 id="signupTitle">Create Account</h3><button class="btn btn-outline" onclick="closeModal('signupModal')">✕</button></div>
+    <div class="modal-body">
+      <form id="signupForm">
+        <select id="role" required>
+          <option value="">Account type</option>
+          <option value="student">Student</option>
+          <option value="mentor">Mentor</option>
+          <option value="ngo">NGO/Company</option>
+        </select>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+          <input id="name" placeholder="Full name / Org name" required />
+          <input id="location" placeholder="City, Country" />
+        </div>
+        <input id="email" type="email" placeholder="Email" required />
+        <input id="password" type="password" placeholder="Password" minlength="6" required />
+        <textarea id="skills" rows="3" placeholder="Skills / Interests / Domain"></textarea>
+        <button class="btn btn-primary" type="submit">Sign Up</button>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="mentorRequestModal" aria-labelledby="mentorReqTitle">
+    <div class="modal-header"><h3 id="mentorReqTitle">Request a Mentor</h3><button class="btn btn-outline" onclick="closeModal('mentorRequestModal')">✕</button></div>
+    <div class="modal-body">
+      <form id="mentorRequestForm">
+        <input id="mrName" placeholder="Your name" required />
+        <input id="mrEmail" type="email" placeholder="Email" required />
+        <select id="mrDomain" required>
+          <option value="">Preferred domain</option>
+          <option>Tech</option>
+          <option>Design</option>
+          <option>Career</option>
+        </select>
+        <textarea id="mrGoals" rows="3" placeholder="Tell us your goals…" required></textarea>
+        <button class="btn btn-primary" type="submit">Submit Request</button>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="partnerModal" aria-labelledby="partnerTitle">
+    <div class="modal-header"><h3 id="partnerTitle">List Internship / Workshop</h3><button class="btn btn-outline" onclick="closeModal('partnerModal')">✕</button></div>
+    <div class="modal-body">
+      <form id="partnerForm">
+        <input id="org" placeholder="Organization" required />
+        <input id="contact" placeholder="Contact email" type="email" required />
+        <input id="title" placeholder="Title" required />
+        <select id="domain" required>
+          <option value="">Domain</option>
+          <option>Tech</option>
+          <option>Design</option>
+          <option>Marketing</option>
+          <option>Operations</option>
+        </select>
+        <select id="duration" required>
+          <option value="">Duration</option>
+          <option>Short</option>
+          <option>Mid</option>
+          <option>Long</option>
+        </select>
+        <textarea id="desc" rows="3" placeholder="Description"></textarea>
+        <button class="btn btn-primary" type="submit">Submit Listing</button>
+      </form>
+    </div>
+  </dialog>
+
+  <script>
+    // ----- UTIL: open/close dialogs -----
+    function openModal(id){ document.getElementById(id).showModal(); }
+    function closeModal(id){ document.getElementById(id).close(); }
+
+    // ----- Demo stats (feel free to edit) -----
+    const stats = {students: 128, mentors: 42, ngos: 18};
+    document.getElementById('statStudents').textContent = stats.students;
+    document.getElementById('statMentors').textContent = stats.mentors;
+    document.getElementById('statNGO').textContent = stats.ngos;
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ----- Mock data -----
+    const internships = [
+      {title:'Frontend Intern', org:'CodeBridge NGO', domain:'Tech', duration:'Short', location:'Remote'},
+      {title:'UX Design Apprentice', org:'Spark Studio', domain:'Design', duration:'Mid', location:'Pune'},
+      {title:'Community Ops Intern', org:'HopeWorks', domain:'Operations', duration:'Short', location:'Mumbai'},
+      {title:'Digital Marketing', org:'GreenLeaf', domain:'Marketing', duration:'Long', location:'Remote'},
+    ];
+    const mentors = [
+      {name:'Anita Sharma', domain:'Design', tagline:'UI/UX at ProductCo', slots:2},
+      {name:'Rahul Verma', domain:'Tech', tagline:'Frontend @ SaaSly', slots:3},
+      {name:'Neha Patil', domain:'Career', tagline:'Campus Coach', slots:5},
+    ];
+
+    // ----- Render lists -----
+    const internshipList = document.getElementById('internshipList');
+    const mentorList = document.getElementById('mentorList');
+
+    function renderInternships(){
+      const d = document.getElementById('filterDomain').value;
+      const dur = document.getElementById('filterDuration').value;
+      const q = document.getElementById('searchTitle').value.toLowerCase();
+      const filtered = internships.filter(i =>
+        (!d || i.domain===d) && (!dur || i.duration===dur) && (!q || (i.title.toLowerCase().includes(q) || i.org.toLowerCase().includes(q)))
+      );
+      internshipList.innerHTML = filtered.map(i => `
+        <article class="item">
+          <div class="meta"><span>${i.org}</span><span>${i.location}</span></div>
+          <h3 style="margin:.2rem 0 .4rem">${i.title}</h3>
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+            <span class="chip">${i.domain}</span>
+            <span class="chip">${i.duration}</span>
+          </div>
+          <div style="margin-top:.8rem;display:flex;gap:.5rem">
+            <button class="btn btn-primary" onclick="apply('${i.title.replace(/'/g,"\'")}')">Apply</button>
+            <button class="btn btn-outline">Save</button>
+          </div>
+        </article>`).join('');
+    }
+    function renderMentors(){
+      mentorList.innerHTML = mentors.map(m => `
+        <article class="item">
+          <div class="meta"><span>${m.domain} Mentor</span><span>${m.slots} slots</span></div>
+          <h3 style="margin:.2rem 0 .2rem">${m.name}</h3>
+          <p style="color:var(--muted);margin:.2rem 0 1rem">${m.tagline}</p>
+          <button class="btn btn-primary" onclick="openModal('mentorRequestModal')">Request Mentorship</button>
+        </article>`).join('');
+    }
+    renderInternships();
+    renderMentors();
+    document.getElementById('filterDomain').addEventListener('change', renderInternships);
+    document.getElementById('filterDuration').addEventListener('change', renderInternships);
+    document.getElementById('searchTitle').addEventListener('input', renderInternships);
+
+    // ----- Simple client-side auth mock (localStorage) -----
+    const USERS_KEY = 'ym_users_v1';
+    function getUsers(){ return JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); }
+    function setUsers(u){ localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+
+    document.getElementById('signupForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const user = {
+        role: role.value,
+        name: name.value,
+        location: location.value,
+        email: email.value,
+        password: password.value,
+        skills: skills.value,
+        verified:false
+      };
+      const users = getUsers();
+      if(users.find(u=>u.email===user.email)) return alert('Account already exists. Please log in.');
+      users.push(user); setUsers(users);
+      alert('Account created! Pending admin verification.');
+      closeModal('signupModal');
+      document.getElementById('pendingCount').textContent = getUsers().filter(u=>!u.verified).length;
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const u = getUsers().find(u=>u.email===loginEmail.value && u.password===loginPassword.value && u.role===loginRole.value);
+      if(!u) return alert('Invalid credentials or role.');
+      localStorage.setItem('ym_session', JSON.stringify({email:u.email,role:u.role,name:u.name}));
+      alert('Welcome, '+ (u.name||'user') + '!');
+      closeModal('loginModal');
+    });
+
+    // ----- Mentor request + Partner listing (simulated notifications) -----
+    function simulateEmail(payload){
+      console.log('EMAIL (simulated):', payload);
+      // In production, integrate an email service or backend endpoint here.
+    }
+
+    document.getElementById('mentorRequestForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const payload = {type:'mentor-request', name: mrName.value, email: mrEmail.value, domain: mrDomain.value, goals: mrGoals.value};
+      simulateEmail(payload);
+      alert('Request submitted! We\'ll email you after matching.');
+      closeModal('mentorRequestModal');
+    });
+
+    document.getElementById('partnerForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const payload = {type:'opportunity', org: org.value, contact: contact.value, title: title.value, domain: domain.value, duration: duration.value, desc: desc.value};
+      internships.push({title:title.value, org:org.value, domain:domain.value, duration:duration.value, location:'Remote'});
+      renderInternships();
+      simulateEmail(payload);
+      alert('Thanks! Your listing is pending verification.');
+      closeModal('partnerModal');
+    });
+
+    // ----- Admin mock actions -----
+    function mockApprove(){
+      const users = getUsers();
+      const idx = users.findIndex(u=>!u.verified);
+      if(idx === -1) return alert('No pending profiles.');
+      users[idx].verified = true; setUsers(users);
+      document.getElementById('pendingCount').textContent = users.filter(u=>!u.verified).length;
+      alert('Approved: '+ users[idx].email);
+    }
+    function mockNotify(){
+      const users = getUsers();
+      alert('Broadcast email sent to '+ users.length +' users (simulated).');
+    }
+    document.getElementById('pendingCount').textContent = getUsers().filter(u=>!u.verified).length;
+
+    // ----- Simple mentor-student matching (toy example) -----
+    function apply(title){
+      const session = JSON.parse(localStorage.getItem('ym_session')||'null');
+      if(!session) { openModal('loginModal'); return; }
+      const domain = (internships.find(i=>i.title===title)||{}).domain;
+      const matched = mentors.find(m=>m.domain===domain && m.slots>0);
+      if(matched){ matched.slots--; renderMentors(); alert(`Applied to ${title}. Matched mentor: ${matched.name}`); }
+      else alert('Applied to '+title+'. Mentor will be assigned soon.');
+    }
+  </script>
+</body>
+</html>
